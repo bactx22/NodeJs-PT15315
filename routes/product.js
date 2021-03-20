@@ -1,4 +1,5 @@
 import express from 'express';
+import { create } from '../controllers/product';
 const router = express.Router();
 
 
@@ -16,8 +17,6 @@ router.get('/product/:id', (req, res) => {
     })
 })
 //theem sp
-router.post('/products', (req, res) => {
-    console.log(req.body)
-})
+router.post('/products', create)
 
 module.exports = router;
