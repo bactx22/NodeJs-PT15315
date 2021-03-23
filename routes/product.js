@@ -1,5 +1,5 @@
 import express from 'express';
-import { create } from '../controllers/product';
+import { create , productById, read, remove} from '../controllers/product';
 const router = express.Router();
 
 
@@ -10,13 +10,10 @@ router.get('/products',(req,res)=> {
     })
 })
 //detail product
-router.get('/product/:id', (req, res) => {
-    res.json({
-        id: req.params.id,
-        name: 'Product 1'
-    })
-})
+router.get('/product/:productTd', read);
+router.delete('/product/:productTd',remove)
+router.param('productTd', productById);
 //theem sp
-router.post('/products', create)
+router.post('/products', create);
 
 module.exports = router;

@@ -14,6 +14,13 @@ const productSchema = mongoose.Schema({
     price: {
         type: Number
     },
+    photo: {
+        data: Buffer,
+        contentType: String  
+    },
+    quantity: {
+        type: Number
+    }, 
     shipping: {
         require: true,
         type: Boolean
@@ -22,6 +29,6 @@ const productSchema = mongoose.Schema({
         type: Number,
         default: 0
     }
-}, { timeStamps: true });
+}, { timestamps: true });
 
 module.exports = mongoose.model("Product",productSchema)

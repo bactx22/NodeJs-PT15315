@@ -1,14 +1,113 @@
-import Product from '../models/product'
-
+import Product from '../models/product';
+import formidable from 'formidable';
+import fs from 'fs';
 
 export const create = (req, res) => {
-    const product = new Product(req.body);
-    product.save((err, data) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+    form.parse(req, (err, fields, files) => {
         if (err) {
-            res.status(400).json({
-                error: "Add product failed"
+            return res.status(400).json({
+                error: "Them san pham ko thanh cong"
             })
         }
-        res.json(data);
+        const { name, description, price } = fields;
+        if (!name || !description || !price) {
+            return res.status(400).json({
+                error:"Ban can nhap day du thong tin"
+            })
+        }
+        let product = new Product(fields);
+        if (files.photo) {
+            if (files.photo.size > 100000) {
+                res.status(400).json({
+                    error:"nen up anh duoi 1mb"
+                })
+            }
+            product.photo.data = fs.readFileSync( files.photo.path );
+            product.photo.contentType = files.photo.path;
+        }
+        product.save(( err, data )=> {
+            if (err) {
+                res.status(400).json({
+                    error:"Ko them san pham"
+                })
+            }
+            res.json(data)
+        })
     })
 }
+
+export const productById = (req, res, next, id) => {
+    Product.findById(id).exec((err, product) => {
+        if (err || !product) {
+            res.status(400).json({
+                error:"Khong tim thay san pham"
+            })
+        }
+        req.product = product;
+        next();
+    })
+}
+export const read = (req, res) => {
+    return res.json(req.product);
+}
+export const remove = (req, res) => {
+    let product = req.product;
+    product.remove((err, deleteProduct) => {
+        if (err) {
+            return res.status(400).json({
+                error: "Ko xoa duoc snan pham"
+            })
+        }
+        res.json({
+            deleteProduct,
+            message:"San pham da duoc xoa"
+        })
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export const create = (req, res) => {
+//     const product = new Product(req.body);
+//     product.save((err, data) => {
+//         if (err) {
+//             res.status(400).json({
+//                 error: "Add product failed"
+//             })
+//         }
+//         res.json(data);
+//     })
+// }
