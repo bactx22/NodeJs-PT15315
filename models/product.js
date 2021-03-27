@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Schema;
 const productSchema = mongoose.Schema({
     name: {
         type: String,
@@ -14,6 +15,12 @@ const productSchema = mongoose.Schema({
     price: {
         type: Number
     },
+    category: {
+        type: ObjectId,
+        ref: "Category",
+        require:true,
+    }
+    ,
     photo: {
         data: Buffer,
         contentType: String  

@@ -2,7 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import productRoutes from './routes/product'
+import productRoutes from './routes/product';
+import categoryRoutes from './routes/category';
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ mongoose.connection.on('Error', err => {
 
 //Routes
 app.use('/api', productRoutes);
+app.use('/api', categoryRoutes)
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

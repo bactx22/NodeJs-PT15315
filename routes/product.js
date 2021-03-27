@@ -7,18 +7,18 @@ const router = express.Router();
 router.get('/products', list);
 
 //detail product
-router.get('/product/:productTd', read);
+router.get('/product/:productId', read);
 
 //xoa product
-router.delete('/product/:productTd', remove)
+router.delete('/product/:productId', remove)
 
-router.param('productTd', productById);
+router.param('productId', productById);
 
 //theem sp
 router.post('/products', create);
 
 //update product
 
-router.put('/product/:productTd',update)
+router.put('/product/:productId',update)
 
 module.exports = router;
