@@ -6,7 +6,11 @@ const categorySchema = mongoose.Schema({
         strim: true,
         maxLength: 32,
         require: true
-    }
+    },
+    photo: {
+        data: Buffer,
+        contentType: String  
+    },
 }, { timestamps: true });
 
 

@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {create,list,categoryById,update,remove,read} from '../controllers/category'
+import {create,list,categoryById,update,remove,read,photo} from '../controllers/category'
 
 //Tạo danh mục
 router.post('/category', create);
@@ -13,5 +13,7 @@ router.param('categoryId', categoryById)
 //xoá danh mục
 router.delete('/category/:categoryId', remove)
 //detail
-router.get('/category/:categoryId',read)
+router.get('/category/:categoryId', read)
+//đọc ảnh
+router.get("/category/photo/:categoryId", photo)
 module.exports = router;

@@ -1,5 +1,5 @@
 import express from 'express';
-import {list, create , productById, read, update, remove} from '../controllers/product';
+import {list, create , productById, read, update, remove,photo} from '../controllers/product';
 const router = express.Router();
 
 
@@ -21,4 +21,6 @@ router.post('/products', create);
 
 router.put('/product/:productId',update)
 
+//đọc ảnh
+router.get("/product/photo/:productId", photo)
 module.exports = router;

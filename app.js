@@ -4,11 +4,15 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import productRoutes from './routes/product';
 import categoryRoutes from './routes/category';
-
+import authRoutes from './routes/auth';
+import cors from 'cors'
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
-
+app.use(cors({
+    origin: '*',
+    credentials: true
+}))
 //connection
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -23,7 +27,9 @@ mongoose.connection.on('Error', err => {
 
 //Routes
 app.use('/api', productRoutes);
-app.use('/api', categoryRoutes)
+app.use('/api', categoryRoutes);
+app.use('/api', authRoutes)
+
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

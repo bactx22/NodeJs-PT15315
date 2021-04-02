@@ -117,6 +117,14 @@ export const update = (req, res) => {
     })
 }
 
+//đọc ảnh
+export const photo = (req, res, next) => {
+    if (req.product.photo.data) {
+        res.set("Content-Type", req.product.photo.contentType);
+        return res.send(req.product.photo.data);
+    }
+    next();
+}
 
 
 
@@ -144,14 +152,3 @@ export const update = (req, res) => {
 
 
 
-// export const create = (req, res) => {
-//     const product = new Product(req.body);
-//     product.save((err, data) => {
-//         if (err) {
-//             res.status(400).json({
-//                 error: "Add product failed"
-//             })
-//         }
-//         res.json(data);
-//     })
-// }
