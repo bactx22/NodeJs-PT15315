@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     },
     hashed_password: {
         type: String,
-        require:false,
+        require:true,
     },
     about: {
         type: String,
@@ -33,9 +33,36 @@ const userSchema = new mongoose.Schema({
     history: {
         type: Array,
         default:[]
-    },
-    password: {
-        type:String
     }
 }, { timestamps: true })
+
+//vitual dield 
+userSchema.virtual('password')
+    .set(function (password) {
+        this._password = password
+        this.salt = uuidv1()
+        this.hashed_password = this.encrytPassword(password)
+    })
+    .get(function () {
+        return this._password
+    })
+
+userSchema.methods = {
+    authenticate: function (plainText) {
+        return this.encrytPassword(plainText) === this.hashed_password;
+    },
+    encrytPassword: function (password) {
+        if (!password) return '';
+        try {
+            return crypto
+                .createHmac('sha1', this.salt)
+                .update(password)
+                .digest('hex')
+        }
+        catch (error) {
+            return "";
+        }
+    }
+}
+
 module.exports = mongoose.model("User", userSchema);

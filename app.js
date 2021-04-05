@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import productRoutes from './routes/product';
 import categoryRoutes from './routes/category';
 import authRoutes from './routes/auth';
+import expressValidator from 'express-validator'
 import cors from 'cors'
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
 mongoose.connection.on('Error', err => {
     console.log(`Data failed, ${err.message}`)
 })
+app.use(expressValidator());
 
 //Routes
 app.use('/api', productRoutes);
