@@ -1,6 +1,6 @@
 import User from "../models/user"
-import auth from "../models/user"
 const jwt = require('jsonwebtoken')
+const expressJwt = require('express-jwt');
 
 export const signup = (req, res) => {
     const user = new User(req.body);
@@ -56,3 +56,10 @@ export const isAdmin = (req, res, next) => {
     }
     next();
 }
+
+
+// export const requireSignin = expressJwt({
+//     secret: process.env.JWT_SECRET,
+//     algorithms: ["HS256"],
+//     userProperty: "auth",
+// });

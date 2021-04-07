@@ -11,8 +11,8 @@ export const userById = (req, res, next, id) => {
     })
 }
 export const read = (req, res) => {
-    req.profile.hashed_password = underfined;
-    req.profile.salt = underfined;
+    req.profile.hashed_password = undefined;
+    req.profile.salt = undefined;
     return res.json(req.profile)
 }
 export const update = (req, res) => {
@@ -26,8 +26,9 @@ export const update = (req, res) => {
                     erro:'You are not authorized to perform in action'
                 })
             }
-            req.profile.hashed_password = underfined;
-            req.profile.salt = underfined
+            req.profile.hashed_password = undefined;
+            req.profile.salt = undefined
+            res.json({user})
         }
     )
 }
