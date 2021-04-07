@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import productRoutes from './routes/product';
 import categoryRoutes from './routes/category';
 import authRoutes from './routes/auth';
+import userRoutes from './routes/user'
 import expressValidator from 'express-validator'
 import cors from 'cors'
 dotenv.config();
@@ -31,6 +32,7 @@ app.use(expressValidator());
 app.use('/api', productRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', authRoutes)
+app.use('/api', userRoutes)
 
 
 const port = process.env.PORT || 8000;

@@ -5,6 +5,7 @@ const router = express.Router();
 import { signup, signin, signout, } from "../controllers/auth"
 
 //router.post
-router.post('/signup',userSignupValidator, signup)
+router.post('/signup', userSignupValidator, signup)
+router.post('/signin',signin)
 
 module.exports = router;
