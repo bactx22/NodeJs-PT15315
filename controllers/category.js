@@ -41,7 +41,8 @@ export const create = (req, res) => {
 }
 
 export const list = (req, res) => {
-    Category.find((err, data) => {
+    Category.find().select("-photo")
+        .exec((err, data) => {
         if (err) {
             error:"Không tìm thấy danh mục"
         }
@@ -74,7 +75,7 @@ export const update = (req, res) => {
                 })
             }
             category.photo.data = fs.readFileSync( files.photo.path );
-            category.photo.contentType = files.photo.path;
+            category.photo.contentType = files.photo.type;
         }
         category.save(( err, data )=> {
             if (err) {

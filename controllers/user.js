@@ -26,9 +26,9 @@ export const update = (req, res) => {
                     erro:'You are not authorized to perform in action'
                 })
             }
-            req.profile.hashed_password = undefined;
-            req.profile.salt = undefined
-            res.json({user})
+            user.hashed_password = undefined;
+            user.salt = undefined
+            res.json(user)
         }
     )
 }

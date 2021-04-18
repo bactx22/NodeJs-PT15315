@@ -69,7 +69,9 @@ export const remove = (req, res) => {
 }
 
 export const list = (req, res) => {
-    Product.find((err, data) => {
+    Product.find().select("-photo")
+        .exec((err, data) => {
+        
         if (err) {
             error: "Không tìm thấy sản phẩm"
         }
@@ -104,7 +106,7 @@ export const update = (req, res) => {
                 })
             }
             product.photo.data = fs.readFileSync( files.photo.path );
-            product.photo.contentType = files.photo.path;
+            product.photo.contentType = files.photo.type;
         }
         product.save(( err, data )=> {
             if (err) {

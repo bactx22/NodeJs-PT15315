@@ -3,8 +3,15 @@ import express from 'express'
 import { userById, read, update } from '../controllers/user'
 import { requireSignin, isAdmin, isAuth } from "../controllers/auth";
 
-router.param('userId', userById)
-router.get('/user/:userId', read);
-router.put('/user/:userId', update);
+router.get('/secret/:userId', requireSignin, isAuth, isAdmin, (req, res) => {
+    res.json({
+        user: req.profile
+    })
+});
 
-module.exports = router;
+
+router.param('userId', userById)
+router.get('/user/:userId',requireSignin,isAuth, read);
+router.put('/user/:userId',requireSignin,isAuth, update);
+
+module.exports = router;    

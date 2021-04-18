@@ -6,6 +6,7 @@ import { signup, signin, signout, } from "../controllers/auth"
 
 //router.post
 router.post('/signup', userSignupValidator, signup)
-router.post('/signin',signin)
+router.post('/signin', signin)
+router.get('/signout', signout);
 
 module.exports = router;

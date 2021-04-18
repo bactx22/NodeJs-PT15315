@@ -1,6 +1,10 @@
 import User from "../models/user"
+import dotenv from 'dotenv'
 const jwt = require('jsonwebtoken')
-const expressJwt = require('express-jwt');
+const expressJwt = require('express-jwt')
+dotenv.config()
+
+
 
 export const signup = (req, res) => {
     const user = new User(req.body);
@@ -37,6 +41,12 @@ export const signin = (req, res) => {
         })
     })
 }
+export const signout = (req, res) => {
+    res.clearCookie('t');
+    res.json({
+        message: 'Signout Success'
+    })
+}
 
 export const isAuth = (req, res, next) => {
     let user = req.profile && req.auth && req.profile._id == req.auth._id;
@@ -58,8 +68,8 @@ export const isAdmin = (req, res, next) => {
 }
 
 
-// export const requireSignin = expressJwt({
-//     secret: process.env.JWT_SECRET,
-//     algorithms: ["HS256"],
-//     userProperty: "auth",
-// });
+export const requireSignin = expressJwt({
+    secret: process.env.JWT_SECRET,
+    algorithms: ["HS256"], 
+    userProperty: "auth",
+});

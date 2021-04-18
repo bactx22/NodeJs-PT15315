@@ -1,5 +1,7 @@
 import express from 'express';
-import {list, create , productById, read, update, remove,photo} from '../controllers/product';
+import { list, create, productById, read, update, remove, photo } from '../controllers/product';
+import { requireSignin, isAdmin, isAuth } from "../controllers/auth";
+import { userById } from '../controllers/user'
 const router = express.Router();
 
 
@@ -10,17 +12,19 @@ router.get('/products', list);
 router.get('/product/:productId', read);
 
 //xoa product
-router.delete('/product/:productId', remove)
+router.delete('/product/:productId/:userId',requireSignin,isAuth, isAdmin, remove)
 
-router.param('productId', productById);
 
 //theem sp
-router.post('/products', create);
+router.post('/products',requireSignin,isAuth, isAdmin, create);
 
 //update product
 
-router.put('/product/:productId',update)
+router.put('/product/:productId/:userId',requireSignin,isAuth, isAdmin,update)
 
 //đọc ảnh
 router.get("/product/photo/:productId", photo)
+//Lấy id
+router.param('productId', productById);
+router.param('userId', userById)
 module.exports = router;
